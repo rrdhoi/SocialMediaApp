@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:social_media_app/app/configs/colors.dart';
 import 'package:social_media_app/app/configs/theme.dart';
+import 'package:social_media_app/app/resources/constant/named_routes.dart';
 import 'package:social_media_app/data/post_model.dart';
+import 'package:social_media_app/ui/widgets/custom_bottom_sheet_comments.dart';
 
 import 'clip_status_bar.dart';
 
@@ -40,13 +42,14 @@ class CardPost extends StatelessWidget {
             right: 20,
             child: Column(
               children: [
-                ..._itemStatus(Icons.favorite, post.like),
+                ..._itemStatus(Icons.favorite, post.like, context),
                 const SizedBox(height: 10),
-                ..._itemStatus(Icons.chat_bubble_outlined, post.comment),
+                ..._itemStatus(
+                    Icons.chat_bubble_outlined, post.comment, context),
                 const SizedBox(height: 10),
-                ..._itemStatus(Icons.bookmark_outlined, "Save"),
+                ..._itemStatus(Icons.bookmark_outlined, "Save", context),
                 const SizedBox(height: 10),
-                ..._itemStatus(Icons.send_rounded, post.share),
+                ..._itemStatus(Icons.send_rounded, post.share, context),
               ],
             ),
           ),
@@ -62,7 +65,7 @@ class CardPost extends StatelessWidget {
               ),
             ),
           ),
-          _buildItemPublisher(),
+          _buildItemPublisher(context),
         ],
       ),
     );
@@ -103,33 +106,37 @@ class CardPost extends StatelessWidget {
     );
   }
 
-  Container _buildItemPublisher() {
+  Container _buildItemPublisher(BuildContext context) {
     return Container(
       padding: const EdgeInsets.only(left: 18, right: 40, bottom: 24),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(50),
-                child: Image.network(
-                  post.imgProfile,
-                  width: 32,
-                  height: 32,
-                  fit: BoxFit.cover,
+          GestureDetector(
+            onTap: () =>
+                Navigator.of(context).pushNamed(NamedRoutes.profileScreen),
+            child: Row(
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(50),
+                  child: Image.network(
+                    post.imgProfile,
+                    width: 32,
+                    height: 32,
+                    fit: BoxFit.cover,
+                  ),
                 ),
-              ),
-              const SizedBox(width: 8),
-              Text(
-                post.name,
-                style: AppTheme.whiteTextStyle.copyWith(
-                  fontSize: 16,
-                  fontWeight: AppTheme.bold,
+                const SizedBox(width: 8),
+                Text(
+                  post.name,
+                  style: AppTheme.whiteTextStyle.copyWith(
+                    fontSize: 16,
+                    fontWeight: AppTheme.bold,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
           const SizedBox(height: 12),
           Text(
@@ -155,18 +162,23 @@ class CardPost extends StatelessWidget {
     );
   }
 
-  _itemStatus(IconData icon, String text) => [
-        Container(
-          height: 40,
-          width: 40,
-          decoration: BoxDecoration(
-            color: AppColors.whiteColor.withOpacity(0.5),
-            borderRadius: BorderRadius.circular(30),
-          ),
-          child: Icon(
-            icon,
-            color: AppColors.whiteColor,
-            size: 18,
+  _itemStatus(IconData icon, String text, BuildContext context) => [
+        GestureDetector(
+          onTap: icon == Icons.chat_bubble_outlined
+              ? () => customBottomSheetComments(context)
+              : () {},
+          child: Container(
+            height: 40,
+            width: 40,
+            decoration: BoxDecoration(
+              color: AppColors.whiteColor.withOpacity(0.5),
+              borderRadius: BorderRadius.circular(30),
+            ),
+            child: Icon(
+              icon,
+              color: AppColors.whiteColor,
+              size: 18,
+            ),
           ),
         ),
         const SizedBox(height: 4),

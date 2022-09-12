@@ -14,14 +14,18 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
-        const SystemUiOverlayStyle(statusBarColor: AppColors.whiteColor));
+      const SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+        statusBarIconBrightness: Brightness.dark,
+      ),
+    );
     return Scaffold(
         body: SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 30),
         child: Column(
           children: [
-            _buildCustomAppBar(),
+            _buildCustomAppBar(context),
             const SizedBox(height: 16),
             BlocProvider(
               create: (context) => PostCubit()..getPosts(),
@@ -49,7 +53,7 @@ class HomePage extends StatelessWidget {
     ));
   }
 
-  CustomAppBar _buildCustomAppBar() {
+  CustomAppBar _buildCustomAppBar(BuildContext context) {
     return CustomAppBar(
       child: Row(
         children: [
