@@ -75,7 +75,7 @@ void customBottomSheetComments(BuildContext context) => showModalBottomSheet(
                         "25 minute ago",
                       ),
                       Divider(
-                        color: AppColors.dashedLineColor.withOpacity(0.3),
+                        color: AppColors.backgroundColor.withOpacity(0.3),
                         thickness: 1,
                       ),
                       const SizedBox(height: 6),
@@ -144,7 +144,7 @@ Padding _buildCommentCardSheet(
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         minimumSize: const Size(12, 38),
-                        primary: AppColors.dashedLineColor,
+                        primary: AppColors.backgroundColor,
                         elevation: 0,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(
@@ -155,12 +155,8 @@ Padding _buildCommentCardSheet(
                       onPressed: () {},
                       child: Row(
                         children: [
-                          Icon(
-                            Icons.reply,
-                            color: Colors.green[400],
-                            size: 16,
-                          ),
-                          const SizedBox(width: 4),
+                          Image.asset("assets/images/ic_share.png", width: 16),
+                          const SizedBox(width: 8),
                           Text(
                             "Reply",
                             style: AppTheme.blackTextStyle.copyWith(
@@ -180,11 +176,7 @@ Padding _buildCommentCardSheet(
                       ),
                     ),
                     const SizedBox(width: 8),
-                    const Icon(
-                      Icons.calendar_today_rounded,
-                      color: AppColors.greyColor,
-                      size: 14,
-                    ),
+                    Image.asset("assets/images/ic_calendar.png", width: 14),
                   ],
                 ),
               ],

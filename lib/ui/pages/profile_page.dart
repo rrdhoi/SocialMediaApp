@@ -56,7 +56,7 @@ class ProfilePage extends StatelessWidget {
                 _buildImageProfile(),
                 const SizedBox(height: 16),
                 Text(
-                  "@Toa Heftiba",
+                  "@Toa_Heftiba",
                   style: AppTheme.blackTextStyle.copyWith(
                     fontWeight: AppTheme.bold,
                     fontSize: 22,
@@ -169,7 +169,7 @@ class ProfilePage extends StatelessWidget {
           ),
         ),
         const Spacer(),
-        const Icon(Icons.more_vert_rounded, size: 24),
+        Image.asset("assets/images/ic_dots_2.png", width: 32),
       ],
     );
   }
@@ -181,7 +181,7 @@ class ProfilePage extends StatelessWidget {
         ElevatedButton(
           onPressed: () {},
           style: ElevatedButton.styleFrom(
-            primary: AppColors.primaryColor,
+            primary: AppColors.greenColor,
             minimumSize: const Size(120, 45),
             elevation: 8,
             shadowColor: AppColors.primaryColor.withOpacity(0.3),
@@ -189,20 +189,21 @@ class ProfilePage extends StatelessWidget {
               borderRadius: BorderRadius.circular(8),
             ),
           ),
-          child: Text('Follow', style: AppTheme.whiteTextStyle),
+          child: Text('Follow',
+              style: AppTheme.whiteTextStyle
+                  .copyWith(fontWeight: AppTheme.semiBold)),
         ),
         const SizedBox(width: 12),
         Container(
           width: 45,
           height: 45,
-          padding: const EdgeInsets.all(8),
           decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: AppColors.greyColor.withOpacity(0.17)),
-          child: Icon(
-            Icons.email_outlined,
-            color: AppColors.blackColor.withOpacity(0.8),
-            size: 18,
+            shape: BoxShape.circle,
+            color: AppColors.greyColor.withOpacity(0.17),
+            image: const DecorationImage(
+              scale: 2.3,
+              image: AssetImage("assets/images/ic_inbox.png"),
+            ),
           ),
         )
       ],

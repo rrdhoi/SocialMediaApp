@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:social_media_app/app/configs/colors.dart';
 import 'package:social_media_app/app/configs/theme.dart';
@@ -31,8 +33,11 @@ class CardPost extends StatelessWidget {
               angle: 3.14,
               child: ClipPath(
                 clipper: ClipStatusBar(),
-                child: ColoredBox(
-                  color: AppColors.whiteColor.withOpacity(0.3),
+                child: BackdropFilter(
+                  filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+                  child: ColoredBox(
+                    color: AppColors.whiteColor.withOpacity(0.3),
+                  ),
                 ),
               ),
             ),
@@ -42,14 +47,17 @@ class CardPost extends StatelessWidget {
             right: 20,
             child: Column(
               children: [
-                ..._itemStatus(Icons.favorite, post.like, context),
+                ..._itemStatus(
+                    "assets/images/ic_heart.png", post.like, context),
                 const SizedBox(height: 10),
                 ..._itemStatus(
-                    Icons.chat_bubble_outlined, post.comment, context),
+                    "assets/images/ic_message.png", post.comment, context),
                 const SizedBox(height: 10),
-                ..._itemStatus(Icons.bookmark_outlined, "Save", context),
+                ..._itemStatus(
+                    "assets/images/ic_bookmark.png", "Save", context),
                 const SizedBox(height: 10),
-                ..._itemStatus(Icons.send_rounded, post.share, context),
+                ..._itemStatus(
+                    "assets/images/ic_send.png", post.share, context),
               ],
             ),
           ),
@@ -84,7 +92,7 @@ class CardPost extends StatelessWidget {
             colors: [
               Colors.transparent,
               Colors.black.withOpacity(0.2),
-              Colors.black.withOpacity(0.3),
+              Colors.black.withOpacity(0.6),
             ],
           ),
         ),
@@ -152,9 +160,9 @@ class CardPost extends StatelessWidget {
           Text(
             post.hashtags.join(" "),
             style: AppTheme.whiteTextStyle.copyWith(
-              color: Colors.greenAccent,
+              color: AppColors.greenColor,
               fontSize: 12,
-              fontWeight: AppTheme.regular,
+              fontWeight: AppTheme.medium,
             ),
           ),
         ],
@@ -162,9 +170,9 @@ class CardPost extends StatelessWidget {
     );
   }
 
-  _itemStatus(IconData icon, String text, BuildContext context) => [
+  _itemStatus(String icon, String text, BuildContext context) => [
         GestureDetector(
-          onTap: icon == Icons.chat_bubble_outlined
+          onTap: icon == "assets/images/ic_message.png"
               ? () => customBottomSheetComments(context)
               : () {},
           child: Container(
@@ -173,11 +181,10 @@ class CardPost extends StatelessWidget {
             decoration: BoxDecoration(
               color: AppColors.whiteColor.withOpacity(0.5),
               borderRadius: BorderRadius.circular(30),
-            ),
-            child: Icon(
-              icon,
-              color: AppColors.whiteColor,
-              size: 18,
+              image: DecorationImage(
+                scale: 2.3,
+                image: AssetImage(icon),
+              ),
             ),
           ),
         ),
