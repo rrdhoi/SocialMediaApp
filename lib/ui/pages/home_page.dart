@@ -42,8 +42,8 @@ class HomePage extends StatelessWidget {
                           return Column(
                             children: state.posts
                                 .map((post) => GestureDetector(
-                                      child: CardPost(post: post),
-                                    ))
+                              child: CardPost(post: post),
+                            ))
                                 .toList(),
                           );
                         } else {
@@ -147,15 +147,15 @@ class HomePage extends StatelessWidget {
   }
 
   _buildBackgroundGradient() => Container(
-        width: double.infinity,
-        height: 150,
-        decoration: BoxDecoration(
-          gradient: LinearGradient(colors: [
-            AppColors.whiteColor.withOpacity(0),
-            AppColors.whiteColor.withOpacity(0.8),
-          ], begin: Alignment.topCenter, end: Alignment.bottomCenter),
-        ),
-      );
+    width: double.infinity,
+    height: 150,
+    decoration: BoxDecoration(
+      gradient: LinearGradient(colors: [
+        AppColors.whiteColor.withOpacity(0),
+        AppColors.whiteColor.withOpacity(0.8),
+      ], begin: Alignment.topCenter, end: Alignment.bottomCenter),
+    ),
+  );
 
   CustomAppBar _buildCustomAppBar(BuildContext context) {
     return CustomAppBar(
@@ -212,8 +212,8 @@ class HomePage extends StatelessWidget {
                     ],
                     image: const DecorationImage(
                       fit: BoxFit.cover,
-                      image: NetworkImage(
-                        "https://images.unsplash.com/photo-1622023986973-e6f6f607c94e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1yZWxhdGVkfDl8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60",
+                      image: AssetImage(
+                        "assets/images/img_profile.jpeg",
                       ),
                     ),
                   ),

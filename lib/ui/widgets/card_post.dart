@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_blurhash/flutter_blurhash.dart';
 import 'package:social_media_app/app/configs/colors.dart';
 import 'package:social_media_app/app/configs/theme.dart';
 import 'package:social_media_app/app/resources/constant/named_routes.dart';
@@ -100,17 +101,37 @@ class CardPost extends StatelessWidget {
     );
   }
 
-  Container _buildImageCover() {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(30),
-        image: DecorationImage(
-          fit: BoxFit.cover,
-          image: NetworkImage(
-            post.picture,
-          ),
+  Widget _buildImageCover() {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(30),
+      child: Stack(children: [
+        BlurHash(
+          imageFit: BoxFit.cover,
+          hash: post.pictureHash,
         ),
-      ),
+        Image.network(
+          post.picture,
+          width: double.infinity,
+          fit: BoxFit.cover,
+          loadingBuilder: (_, child, ImageChunkEvent? loadingProgress) {
+            if (loadingProgress == null) return child;
+            return Center(
+              child: SizedBox(
+                height: 55,
+                width: 55,
+                child: CircularProgressIndicator(
+                  color: Colors.white.withOpacity(0.8),
+                  strokeWidth: 1.2,
+                  value: loadingProgress.expectedTotalBytes != null
+                      ? loadingProgress.cumulativeBytesLoaded /
+                      loadingProgress.expectedTotalBytes!
+                      : null,
+                ),
+              ),
+            );
+          },
+        )
+      ]),
     );
   }
 
@@ -128,7 +149,7 @@ class CardPost extends StatelessWidget {
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(50),
-                  child: Image.network(
+                  child: Image.asset(
                     post.imgProfile,
                     width: 32,
                     height: 32,
@@ -171,30 +192,30 @@ class CardPost extends StatelessWidget {
   }
 
   _itemStatus(String icon, String text, BuildContext context) => [
-        GestureDetector(
-          onTap: icon == "assets/images/ic_message.png"
-              ? () => customBottomSheetComments(context)
-              : () {},
-          child: Container(
-            height: 40,
-            width: 40,
-            decoration: BoxDecoration(
-              color: AppColors.whiteColor.withOpacity(0.5),
-              borderRadius: BorderRadius.circular(30),
-              image: DecorationImage(
-                scale: 2.3,
-                image: AssetImage(icon),
-              ),
-            ),
+    GestureDetector(
+      onTap: icon == "assets/images/ic_message.png"
+          ? () => customBottomSheetComments(context)
+          : () {},
+      child: Container(
+        height: 40,
+        width: 40,
+        decoration: BoxDecoration(
+          color: AppColors.whiteColor.withOpacity(0.5),
+          borderRadius: BorderRadius.circular(30),
+          image: DecorationImage(
+            scale: 2.3,
+            image: AssetImage(icon),
           ),
         ),
-        const SizedBox(height: 4),
-        Text(
-          text,
-          style: AppTheme.whiteTextStyle.copyWith(
-            fontSize: 12,
-            fontWeight: AppTheme.regular,
-          ),
-        ),
-      ];
+      ),
+    ),
+    const SizedBox(height: 4),
+    Text(
+      text,
+      style: AppTheme.whiteTextStyle.copyWith(
+        fontSize: 12,
+        fontWeight: AppTheme.regular,
+      ),
+    ),
+  ];
 }
